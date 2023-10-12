@@ -9,12 +9,14 @@ class NetworkNode:
 
     def send(self, data, dest):
         yield self.queue.put(data)
-        print(f'{self.name} sent: {data}')
+        #print(f'{self.name} sent: {data}')
+        print(f'{self.env.now:.2f}: {self.name} sent: {data}')
         yield self.env.timeout(1)  # Simulate transmission time
-        yield self.env.process(dest.receive(data))  # Call the receive function of the destination node
+       # Call the receive function of the destination node
+        yield self.env.process(dest.receive(data)) 
 
     def receive(self, data):
-        print(f'{self.name} received: {data}')
+        print(f'{self.env.now:.2f}: {self.name} received: {data}')
         yield self.env.timeout(1)  # Simulate processing time
 
 # Define a simulation process
